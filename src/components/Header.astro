@@ -1,0 +1,51 @@
+---
+import LanguageToggle from './LanguageToggle';
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/95 shadow-lg md:backdrop-blur-md transition-all duration-300 dark:bg-slate-900/95 dark:border-b dark:border-slate-700">
+  <div class="container mx-auto px-4">
+    <nav class="flex h-18 items-center justify-between md:h-20">
+      <a href="/" class="flex min-w-0 items-center gap-3">
+        <div class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg md:h-10 md:w-10">
+          <span class="text-2xl text-white md:text-xl">佛</span>
+        </div>
+        <span class="truncate text-3xl font-bold text-gray-800 font-chinese md:text-xl dark:text-slate-100">
+          寬覺堂
+        </span>
+      </a>
+
+      <div class="flex items-center gap-4">
+        <div class="hidden md:flex items-center gap-8">
+          <a href="/" class="text-gray-700 hover:text-amber-600 transition-colors font-medium dark:text-slate-300 dark:hover:text-cyan-400">首頁</a>
+          <a href="/page/1/" class="text-gray-700 hover:text-amber-600 transition-colors font-medium dark:text-slate-300 dark:hover:text-cyan-400">文章</a>
+          <a href="#about" class="text-gray-700 hover:text-amber-600 transition-colors font-medium dark:text-slate-300 dark:hover:text-cyan-400">關於</a>
+        </div>
+
+        <div class="hidden md:block">
+          <LanguageToggle client:idle />
+        </div>
+
+        <button id="theme-toggle" type="button" class="rounded-full p-2.5 text-gray-600 hover:bg-amber-50 transition dark:text-slate-300 dark:hover:bg-slate-800" aria-label="切換深色模式">
+          <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+          <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  (function() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', function() {
+      var html = document.documentElement;
+      var isDark = html.classList.toggle('dark');
+      try { localStorage.setItem('bfnn-site-theme', isDark ? 'dark' : 'light'); } catch {}
+    });
+  })();
+</script>

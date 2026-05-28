@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Skill(find-skills)",
+      "Skill(find-skills:*)",
+      "Bash(npx skills *)",
+      "WebFetch(domain:skills.sh)",
+      "Bash(ls ~/.agents/skills/web-design-guidelines/)",
+      "Read(//home/jash/.agents/skills/web-design-guidelines/**)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(curl -sL https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md)",
+      "Bash(node -e \"const o = require\\('opencc-js'\\); console.log\\(Object.keys\\(o\\)\\)\")",
+      "Bash(node -e \"const o = require\\('opencc-js'\\); console.log\\(o.HTMLConverter.toString\\(\\).slice\\(0,200\\)\\)\")"
+    ]
+  }
+}

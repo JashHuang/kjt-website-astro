@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-family-chinese: 'Noto Serif TC', serif;
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+  --color-gold-800: #92400e;
+  --color-gold-900: #78350f;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    height: -webkit-fill-available;
+    min-height: 100%;
+  }
+
+  body {
+    font-family: var(--font-family-chinese), serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(135deg, #fef7ed 0%, #fff7ed 50%, #fef3e2 100%);
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .dark body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    color: #e2e8f0;
+  }
+}
+
+@layer utilities {
+  .min-app-screen {
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+  }
+
+  .font-chinese {
+    font-family: var(--font-family-chinese), serif;
+  }
+
+  .reader-paper-shell {
+    background:
+      radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.5), transparent 22%),
+      radial-gradient(circle at 80% 18%, rgba(255, 255, 255, 0.35), transparent 18%),
+      linear-gradient(180deg, #efe6d5 0%, #e9deca 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  }
+
+  .reader-paper-surface {
+    background:
+      linear-gradient(rgba(82, 67, 43, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(82, 67, 43, 0.025) 1px, transparent 1px),
+      linear-gradient(180deg, rgba(255, 251, 245, 0.55), rgba(244, 235, 220, 0.78));
+    background-size: 100% 18px, 18px 100%, 100% 100%;
+  }
+
+  .text-gradient {
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-image: linear-gradient(to right, var(--color-gold-600), var(--color-gold-400));
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+}

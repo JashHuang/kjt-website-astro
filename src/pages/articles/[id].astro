@@ -1,0 +1,81 @@
+---
+import { readFileSync } from 'node:fs';
+import { loadAllArticles, loadArticleContent } from '../../lib/articles';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleViewer from '../../components/ArticleViewer';
+import type { Article } from '../../lib/articles';
+
+export async function getStaticPaths() {
+  const allArticles = loadAllArticles();
+  return allArticles.map((article) => ({
+    params: { id: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props as { article: Article };
+
+const allArticles = loadAllArticles();
+const mdContent = loadArticleContent(article);
+
+const plainText = mdContent
+  .replace(/[#*\[\]()<>|]/g, '')
+  .replace(/\n{3,}/g, '\n\n')
+  .slice(0, 300);
+
+const sameCategory = allArticles
+  .filter((a) => a.category === article.category && a.id !== article.id)
+  .sort((a, b) => (a.id > b.id ? 1 : -1))
+  .slice(0, 6);
+---
+
+<BaseLayout
+  title={`${article.title} - 寬覺堂`}
+  description={article.description || plainText.slice(0, 160)}
+  canonical={`https://kjt-website.vercel.app/articles/${article.id}/`}
+>
+  <main class="container mx-auto px-4 py-24">
+    <!-- SEO: 伺服器端渲染的文章內容，JS hydrate 後隱藏 -->
+    <div id="article-seo-content" data-no-convert>
+      <article class="prose prose-lg max-w-none font-chinese mx-auto px-4 py-8">
+        <header class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-800">{article.title}</h1>
+          <p class="text-amber-600 mt-2">#{article.id} · {article.category} · {article.author}</p>
+        </header>
+
+        <div class="article-content leading-relaxed text-gray-700 text-lg space-y-4">
+          {mdContent.split('\n').map((line) => {
+            if (line.startsWith('# ')) return <h1 class="text-2xl font-bold mt-8 mb-4">{line.replace(/^# /, '')}</h1>;
+            if (line.startsWith('## ')) return <h2 class="text-xl font-bold mt-6 mb-3">{line.replace(/^## /, '')}</h2>;
+            if (line.startsWith('### ')) return <h3 class="text-lg font-bold mt-5 mb-2">{line.replace(/^### /, '')}</h3>;
+            if (line.trim()) return <p class="mb-3">{line}</p>;
+            return null;
+          })}
+        </div>
+      </article>
+    </div>
+
+    <!-- 互動式閱讀器（JS hydrate 後顯示） -->
+    <div class="article-viewer-section">
+      <ArticleViewer article={article} mdContent={mdContent} client:idle />
+    </div>
+
+    <!-- 相關文章 -->
+    <section class="mt-16 mx-auto max-w-4xl">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">相同分類</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {sameCategory.map((a) => (
+          <a
+            key={a.id}
+            href={`/articles/${a.id}/`}
+            class="block p-4 rounded-2xl border border-amber-100 bg-white/80 hover:bg-amber-50/70 transition-colors"
+          >
+            <span class="text-sm text-amber-600">#{a.id}</span>
+            <h3 class="font-semibold text-gray-800 mt-1">{a.title}</h3>
+            <p class="text-sm text-gray-500 mt-1">{a.author}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

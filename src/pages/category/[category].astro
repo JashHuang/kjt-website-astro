@@ -1,0 +1,17 @@
+---
+import { loadAllArticles, ALL_CATEGORIES } from '../../lib/articles';
+
+export async function getStaticPaths({ collectParams }) {
+  const allArticles = loadAllArticles();
+  const categories = ALL_CATEGORIES.slice(1);
+
+  return categories.map((cat) => ({
+    params: { category: cat },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props as { category: string };
+
+return Astro.redirect(`/category/${encodeURIComponent(category)}/1/`, 301);
+---

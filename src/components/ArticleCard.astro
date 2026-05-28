@@ -1,0 +1,70 @@
+---
+import type { Article } from '../lib/articles';
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+
+const categoryColors: Record<string, string> = {
+  '地藏法門': 'from-amber-500 to-yellow-500',
+  '淨土法門': 'from-purple-500 to-indigo-500',
+  '經典註釋': 'from-blue-500 to-cyan-500',
+  '護生善行': 'from-green-500 to-emerald-500',
+  '律學戒律': 'from-violet-500 to-purple-500',
+  '因果勸善': 'from-orange-500 to-red-500',
+  '傳記師承': 'from-cyan-500 to-blue-500',
+  '持咒儀軌': 'from-fuchsia-500 to-pink-500',
+  '孝道倫理': 'from-teal-500 to-green-500',
+  '佛教基礎': 'from-sky-500 to-indigo-400',
+  '禪修開示': 'from-emerald-500 to-teal-500',
+  '修行指引': 'from-rose-500 to-pink-500',
+};
+
+const gradientColor = categoryColors[article.category] || 'from-gray-500 to-gray-600';
+---
+
+<a
+  href={`/articles/${article.id}/`}
+  class="group block cursor-pointer overflow-hidden rounded-3xl border border-white/50 bg-white/92 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl md:rounded-2xl md:bg-white/80 md:backdrop-blur-sm"
+>
+  <div class={`h-2 bg-gradient-to-r ${gradientColor}`} />
+
+  <div class="p-6 md:p-6">
+    <div class="mb-4 flex items-center justify-between">
+      <span class={`inline-block rounded-full bg-gradient-to-r px-3 py-1.5 text-sm font-medium text-white md:px-3 md:py-1 md:text-xs ${gradientColor}`}>
+        {article.category}
+      </span>
+      <span class="text-base text-gray-400 md:text-sm">#{article.id}</span>
+    </div>
+
+    <h3 class="mb-3 font-chinese text-2xl font-bold leading-relaxed text-gray-800 transition-colors group-hover:text-amber-600 md:text-xl">
+      {article.title}
+    </h3>
+
+    <p class="mb-4 line-clamp-3 text-lg leading-relaxed text-gray-600 md:line-clamp-2 md:text-base">
+      {article.description}
+    </p>
+
+    <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+      <div class="flex items-center gap-2">
+        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-orange-400 md:h-8 md:w-8">
+          <span class="text-base font-medium text-white md:text-sm">
+            {article.author.charAt(0)}
+          </span>
+        </div>
+        <span class="text-base font-medium text-gray-600 md:text-sm">{article.author}</span>
+      </div>
+
+      <div class="flex items-center gap-1 text-amber-600 opacity-0 group-hover:opacity-100 transition-opacity">
+        <span class="text-base font-medium md:text-sm">閱讀全文</span>
+        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-0 group-hover:h-16 transition-all duration-500 bg-gradient-to-t from-amber-50/50 to-transparent" />
+</a>

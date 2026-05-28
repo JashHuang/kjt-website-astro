@@ -1,0 +1,87 @@
+---
+import Header from '../components/Header.astro';
+import '../styles/global.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+}
+
+const { title, description, canonical, image } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-TW" class="">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🙏</text></svg>" />
+  <title>{title || '寬覺堂 - 佛學經典、高僧大德開示錄修行指引'}</title>
+  <meta name="description" content={description || '寬覺堂 - 收錄佛教經典、高僧大德開示錄、修行指引等珍貴法寶'} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta property="og:title" content={title || '寬覺堂 - 佛學經典、高僧大德開示錄修行指引'} />
+  <meta property="og:description" content={description || '寬覺堂 - 收錄佛教經典、高僧大德開示錄、修行指引等珍貴法寶'} />
+  <meta property="og:type" content="website" />
+  {image && <meta property="og:image" content={image} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&display=swap" />
+  <script is:inline>
+    (function() {
+      var theme = localStorage.getItem('bfnn-site-theme');
+      if (theme === 'dark') document.documentElement.classList.add('dark');
+    })();
+  </script>
+  <script is:inline type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "寬覺堂",
+      "url": "https://kjt-website.vercel.app",
+      "description": "收錄佛教經典、高僧大德開示錄、修行指引等珍貴法寶"
+    }
+  </script>
+</head>
+<body>
+  <Header />
+  <slot />
+  <footer id="footer" class="mt-16 bg-gradient-to-r from-gray-800 to-gray-900 py-12 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <p class="mb-2 text-lg text-gray-400 md:text-base" data-convert>南無阿彌陀佛</p>
+      <p class="text-base text-gray-500 md:text-sm" data-convert>願一切眾生離苦得樂，共證菩提</p>
+    </div>
+  </footer>
+  <!-- 關於彈窗 -->
+  <dialog id="about-dialog" class="backdrop:bg-black/60 rounded-3xl border-none bg-white/95 p-10 shadow-2xl md:rounded-2xl md:p-8 dark:bg-slate-900 dark:text-slate-100 max-w-lg">
+    <div class="text-center">
+      <h2 class="mb-6 font-chinese text-3xl font-bold text-gray-800 md:text-2xl dark:text-slate-100">關於寬覺堂</h2>
+      <h3 class="mb-4 font-chinese text-2xl font-bold leading-tight text-gray-800 md:text-xl dark:text-slate-100">
+        <span class="text-amber-700 dark:text-cyan-400">佛法如燈</span>
+        <br />
+        <span class="dark:text-slate-200">照破千年暗</span>
+      </h3>
+      <p class="mx-auto max-w-md font-chinese text-lg leading-relaxed text-gray-600 dark:text-slate-300">
+        精選歷代高僧大德珍貴開示<br />願有緣者皆能得益，同登覺岸
+      </p>
+      <button type="button" id="about-close" class="mt-8 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-8 py-3 text-lg font-medium text-white transition hover:from-amber-600 hover:to-orange-600 dark:from-cyan-500 dark:to-blue-600 dark:hover:from-cyan-600 dark:hover:to-blue-700">知道了</button>
+    </div>
+  </dialog>
+
+  <script>
+    (function() {
+      var dialog = document.getElementById('about-dialog');
+      var closeBtn = document.getElementById('about-close');
+      if (!dialog || !closeBtn) return;
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href="#about"]');
+        if (link) { e.preventDefault(); dialog.showModal(); }
+      });
+      closeBtn.addEventListener('click', function() { dialog.close(); });
+    })();
+  </script>
+</body>
+</html>

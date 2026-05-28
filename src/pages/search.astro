@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchBar from '../components/SearchBar';
+import { loadAllArticles } from '../lib/articles';
+
+const allArticles = loadAllArticles();
+---
+
+<BaseLayout
+  title="搜尋文章 - 寬覺堂"
+  description="搜尋寬覺堂收錄的佛教經典、高僧大德開示錄、修行指引等珍貴法寶"
+  canonical="https://kjt-website.vercel.app/search/"
+>
+  <main class="container mx-auto px-4 py-24">
+    <h1 class="text-4xl font-bold text-gray-800 font-chinese mb-8">搜尋文章</h1>
+    <SearchBar articles={allArticles} client:load />
+  </main>
+</BaseLayout>
