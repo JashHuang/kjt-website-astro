@@ -11,7 +11,15 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(curl -sL https://raw.githubusercontent.com/vercel-labs/web-interface-guidelines/main/command.md)",
       "Bash(node -e \"const o = require\\('opencc-js'\\); console.log\\(Object.keys\\(o\\)\\)\")",
-      "Bash(node -e \"const o = require\\('opencc-js'\\); console.log\\(o.HTMLConverter.toString\\(\\).slice\\(0,200\\)\\)\")"
+      "Bash(node -e \"const o = require\\('opencc-js'\\); console.log\\(o.HTMLConverter.toString\\(\\).slice\\(0,200\\)\\)\")",
+      "WebSearch",
+      "Bash(npm view *)",
+      "Bash(npm pack *)",
+      "WebFetch(domain:docs.astro.build)",
+      "Bash(nvm ls *)",
+      "Read(//usr/local/nvm/versions/**)",
+      "Bash(npx astro *)",
+      "Bash(node -e ' *)"
     ]
   }
 }
